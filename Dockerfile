@@ -45,7 +45,7 @@ COPY init_container.sh /opt/startup/init_container.sh
 # setup default site
 RUN mkdir /opt/defaultsite
 COPY hostingstart.html /opt/defaultsite
-COPY app.py /opt/defaultsite
+COPY application.py /opt/defaultsite
 COPY requirements.txt /opt/defaultsite/
 COPY SalaryPrediction.pkl /opt/defaultsite/
 RUN pip install -r /opt/defaultsite/requirements.txt
