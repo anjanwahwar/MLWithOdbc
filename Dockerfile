@@ -1,8 +1,14 @@
-FROM mcr.microsoft.com/dotnet/framework/aspnet:4.7.2
-COPY vc_redist.x64.exe c:/ \
-     msodbcsql_17.3.1.1_x64.msi c:/
-RUN c:\\vc_redist.x64.exe /install /passive /norestart 
-RUN msiexec.exe /i C:\\msodbcsql_17.3.1.1_x64.msi /norestart /qn /quiet /passive IACCEPTMSODBCSQLLICENSETERMS=YES
+FROM oryxprod/python-3.7:20190109.2
+LABEL maintainer="appsvc-images@microsoft.com"
+
+RUN apt-get install curl
+RUN apt-get install apt-transport-https
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | tee /etc/apt/sources.list.d/msprod.list
+
+RUN apt-get update
+ENV ACCEPT_EULA=y DEBIAN_FRONTEND=noninteractive
+RUN apt-get install mssql-tools unixodbc-dev -y
 
 # Web Site Home
 ENV HOME_SITE "/home/site/wwwroot"
@@ -21,6 +27,8 @@ RUN apt-get update \
     && pip install gunicorn \ 
     && pip install virtualenv \
     && pip install flask 
+
+RUN apt-get install gcc -y --reinstall build-essential
 		
 WORKDIR ${HOME_SITE}
 
