@@ -1,0 +1,12 @@
+pillow
+Flask
+jsonschema
+requests
+Flask-API
+Flask-RESTful
+api
+azure-storage-blob
+pyodbc
+python-dateutil
+PyMuPDF
+img2pdf
